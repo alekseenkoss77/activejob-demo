@@ -7,9 +7,8 @@
 ).each { |item| Category.create!(title: item) } unless Category.any?
 
 category = Category.find_by(title: 'Travel')
-images_dir_path = Rails.root.join("tmp", "images")
 
-Dir.foreach(images_dir_path) do |filename|
+Dir.foreach(Rails.root.join("tmp", "images")) do |filename|
   next if File.directory?(filename)
 
   Photo.transaction do
@@ -18,6 +17,9 @@ Dir.foreach(images_dir_path) do |filename|
       author: Faker::Movies::StarWars.character
     )
 
-    record.file.attach(io: File.open("#{images_dir_path}/#{filename}")), filename: filename)
+    record.file.attach(
+      io: File.open(Rails.root.join("tmp", "images", filename)),
+      filename: filename
+    )
   end
 end
