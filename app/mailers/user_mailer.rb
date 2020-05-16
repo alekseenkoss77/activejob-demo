@@ -3,7 +3,6 @@ class UserMailer < ApplicationMailer
     return if email.blank?
 
     @name = name
-
     mail to: email, subject: I18n.t('emails.subjects.welcome')
   end
 end
