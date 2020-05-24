@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_28_090458) do
+ActiveRecord::Schema.define(version: 2020_05_16_133228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,19 @@ ActiveRecord::Schema.define(version: 2019_12_28_090458) do
     t.index ["author"], name: "index_photos_on_author"
     t.index ["category_id"], name: "index_photos_on_category_id"
     t.index ["title"], name: "index_photos_on_title"
+  end
+
+  create_table "visitor_stats", force: :cascade do |t|
+    t.string "ip_address"
+    t.string "city"
+    t.string "country"
+    t.string "user_agent"
+    t.integer "visits"
+    t.integer "time_spent"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country", "city", "user_agent"], name: "index_visitor_stats_on_country_and_city_and_user_agent"
+    t.index ["ip_address"], name: "index_visitor_stats_on_ip_address"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
